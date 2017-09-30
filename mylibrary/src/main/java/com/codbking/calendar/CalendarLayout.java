@@ -35,7 +35,7 @@ public class CalendarLayout extends FrameLayout {
     public static final int TYPE_OPEN = 0;
     //折叠
     public static final int TYPE_FOLD = 1;
-    public int type = TYPE_FOLD;
+    public int type = TYPE_OPEN;
 
     //是否处于滑动中
     private boolean isSilde = false;

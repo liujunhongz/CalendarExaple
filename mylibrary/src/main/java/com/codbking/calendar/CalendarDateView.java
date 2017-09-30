@@ -73,6 +73,8 @@ public class CalendarDateView extends ViewPager implements CalendarTopView {
        final int[] dateArr= CalendarUtil.getYMD(new Date());
 
         setAdapter(new PagerAdapter() {
+            public int mChildCount;
+
             @Override
             public int getCount() {
                 return Integer.MAX_VALUE;
@@ -109,6 +111,22 @@ public class CalendarDateView extends ViewPager implements CalendarTopView {
                 container.removeView((View) object);
                 cache.addLast((CalendarView) object);
                 views.remove(position);
+            }
+
+            @Override
+            public void notifyDataSetChanged() {
+                mChildCount = getCount();
+                super.notifyDataSetChanged();
+            }
+
+            @Override
+            public int getItemPosition(Object object) {
+                // 重写getItemPosition,保证每次获取时都强制重绘UI
+                if (mChildCount > 0) {
+                    mChildCount--;
+                    return POSITION_NONE;
+                }
+                return super.getItemPosition(object);
             }
         });
 

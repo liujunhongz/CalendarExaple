@@ -1,15 +1,10 @@
 package com.codbking.calendar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import static android.R.attr.listDivider;
-import static android.R.attr.max;
-import static android.R.attr.y;
-import static android.R.id.list;
 import static com.codbking.calendar.CalendarUtil.getDayOfWeek;
 
 

@@ -1,6 +1,8 @@
 package com.codbking.calendar;
 
 
+import java.util.Locale;
+
 public class CalendarBean {
 
     public int year;
@@ -21,39 +23,44 @@ public class CalendarBean {
         this.day = day;
     }
 
-    public String getDisplayWeek(){
-        String s="";
-         switch(week){
-             case 1:
-                 s="星期日";
-          break;
-             case 2:
-                 s="星期一";
-          break;
-             case 3:
-                 s="星期二";
-                 break;
-             case 4:
-                 s="星期三";
-                 break;
-             case 5:
-                 s="星期四";
-                 break;
-             case 6:
-                 s="星期五";
-                 break;
-             case 7:
-                 s="星期六";
-                 break;
+    public String getDisplayWeek() {
+        String s = "";
+        switch (week) {
+            case 1:
+                s = "星期日";
+                break;
+            case 2:
+                s = "星期一";
+                break;
+            case 3:
+                s = "星期二";
+                break;
+            case 4:
+                s = "星期三";
+                break;
+            case 5:
+                s = "星期四";
+                break;
+            case 6:
+                s = "星期五";
+                break;
+            case 7:
+                s = "星期六";
+                break;
 
-         }
-        return s ;
+        }
+        return s;
     }
 
     @Override
     public String toString() {
 //        String s=year+"/"+moth+"/"+day+"\t"+getDisplayWeek()+"\t农历"+":"+chinaMonth+"/"+chinaDay;
-        String s=year+"/"+moth+"/"+day;
+        String s = year + "/" + moth + "/" + day;
         return s;
+    }
+
+    public String toServerFormat() {
+        String format = String.format(Locale.getDefault(), "%d-%02d-%02d", year, moth, day);
+        return format;
     }
 }
