@@ -1,15 +1,12 @@
 package com.codbking.calendar;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,9 +60,9 @@ public class CalendarView extends ViewGroup {
         this.adapter = adapter;
     }
 
-    public void setData(List<CalendarBean> data,boolean isToday) {
+    public void setData(List<CalendarBean> data, boolean isToday) {
         this.data = data;
-        this.isToday=isToday;
+        this.isToday = isToday;
         setItem();
         requestLayout();
     }
@@ -86,26 +83,37 @@ public class CalendarView extends ViewGroup {
                 addViewInLayout(chidView, i, chidView.getLayoutParams(), true);
             }
 
-            if(isToday&&selectPostion==-1){
-                int[]date=CalendarUtil.getYMD(new Date());
-                if(bean.year==date[0]&&bean.moth==date[1]&&bean.day==date[2]){
-                     selectPostion=i;
+//            if(isToday&&selectPostion==-1){
+//                int[]date=CalendarUtil.getYMD(new Date());
+//                if(bean.year==date[0]&&bean.moth==date[1]&&bean.day==date[2]){
+//                     selectPostion=i;
+//                }
+//            }else {
+//                if (selectPostion == -1 && bean.day == 1) {
+//                    selectPostion = i;
+//                }
+//            }
+
+            int[] date = CalendarUtil.getYMD(new Date());   // 这句最好放在for循环外面，减少内存开支
+            if (isToday && selectPostion == -1) {
+                if (bean.year == date[0] && bean.moth == date[1] && bean.day == date[2]) {
+                    selectPostion = i;
                 }
-            }else {
-                if (selectPostion == -1 && bean.day == 1) {
+            } else {
+                if (selectPostion == -1 && bean.day == date[2]) {
                     selectPostion = i;
                 }
             }
 
-            chidView.setSelected(selectPostion==i);
+            chidView.setSelected(selectPostion == i);
 
             setItemClick(chidView, i, bean);
 
         }
     }
 
-    public Object[] getSelect(){
-         return new Object[]{getChildAt(selectPostion),selectPostion,data.get(selectPostion)};
+    public Object[] getSelect() {
+        return new Object[]{getChildAt(selectPostion), selectPostion, data.get(selectPostion)};
     }
 
     public void setItemClick(final View view, final int potsion, final CalendarBean bean) {
@@ -156,8 +164,8 @@ public class CalendarView extends ViewGroup {
         setMeasuredDimension(parentWidth, itemHeight * row);
 
 
-        for(int i=0;i<getChildCount();i++){
-            View childView=getChildAt(i);
+        for (int i = 0; i < getChildCount(); i++) {
+            View childView = getChildAt(i);
             childView.measure(MeasureSpec.makeMeasureSpec(itemWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(itemHeight, MeasureSpec.EXACTLY));
         }
 
@@ -166,7 +174,7 @@ public class CalendarView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        for (int i = 0; i <getChildCount(); i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             layoutChild(getChildAt(i), i, l, t, r, b);
         }
     }
