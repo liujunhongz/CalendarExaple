@@ -29,7 +29,7 @@ public class CalendarDateView extends ViewPager implements CalendarTopView {
 
     private LinkedList<CalendarView> cache = new LinkedList();
 
-    private int MAXCOUNT=6;
+    private int MAXCOUNT = 6;
 
 
     private int row = 6;
@@ -70,8 +70,7 @@ public class CalendarDateView extends ViewPager implements CalendarTopView {
     }
 
     private void init() {
-       final int[] dateArr= CalendarUtil.getYMD(new Date());
-
+        final int[] dateArr = CalendarUtil.getYMD(new Date());
         setAdapter(new PagerAdapter() {
             public int mChildCount;
 
@@ -99,7 +98,7 @@ public class CalendarDateView extends ViewPager implements CalendarTopView {
                 view.setOnItemClickListener(onItemClickListener);
                 view.setAdapter(mAdapter);
 
-                view.setData(getMonthOfDayList(dateArr[0],dateArr[1]+position-Integer.MAX_VALUE/2),position==Integer.MAX_VALUE/2);
+                view.setData(getMonthOfDayList(dateArr[0], dateArr[1] + position - Integer.MAX_VALUE / 2), position == Integer.MAX_VALUE / 2);
                 container.addView(view);
                 views.put(position, view);
 
@@ -134,7 +133,16 @@ public class CalendarDateView extends ViewPager implements CalendarTopView {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-
+                if (position > 1 && position < Integer.MAX_VALUE - 1) {
+                    CalendarView view = views.get(position - 1);
+                    if (view != null && view.tmpPosition != -1) {
+                        view.getChildAt(view.tmpPosition).setSelected(false);
+                    }
+                    view = views.get(position + 1);
+                    if (view != null && view.tmpPosition != -1) {
+                        view.getChildAt(view.tmpPosition).setSelected(false);
+                    }
+                }
                 if (onItemClickListener != null) {
                     CalendarView view = views.get(position);
                     Object[] obs = view.getSelect();
@@ -148,7 +156,7 @@ public class CalendarDateView extends ViewPager implements CalendarTopView {
 
 
     private void initData() {
-        setCurrentItem(Integer.MAX_VALUE/2, false);
+        setCurrentItem(Integer.MAX_VALUE / 2, false);
         getAdapter().notifyDataSetChanged();
 
     }

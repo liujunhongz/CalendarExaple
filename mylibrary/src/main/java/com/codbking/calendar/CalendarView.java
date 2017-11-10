@@ -22,6 +22,7 @@ public class CalendarView extends ViewGroup {
     private static final String TAG = "CalendarView";
 
     private int selectPostion = -1;
+    public int tmpPosition = -1;
 
     private CaledarAdapter adapter;
     private List<CalendarBean> data;
@@ -73,7 +74,7 @@ public class CalendarView extends ViewGroup {
         if (adapter == null) {
             throw new RuntimeException("adapter is null,please setadapter");
         }
-
+        int[] date = CalendarUtil.getYMD(new Date());   // 这句最好放在for循环外面，减少内存开支
         for (int i = 0; i < data.size(); i++) {
             CalendarBean bean = data.get(i);
             View view = getChildAt(i);
@@ -93,11 +94,11 @@ public class CalendarView extends ViewGroup {
 //                    selectPostion = i;
 //                }
 //            }
-
-            int[] date = CalendarUtil.getYMD(new Date());   // 这句最好放在for循环外面，减少内存开支
+            chidView.setSelected(false);
             if (isToday && selectPostion == -1) {
                 if (bean.year == date[0] && bean.moth == date[1] && bean.day == date[2]) {
                     selectPostion = i;
+                    chidView.setSelected(selectPostion == i);
                 }
             } else {
                 if (selectPostion == -1 && bean.day == date[2]) {
@@ -105,7 +106,6 @@ public class CalendarView extends ViewGroup {
                 }
             }
 
-            chidView.setSelected(selectPostion == i);
 
             setItemClick(chidView, i, bean);
 
@@ -121,12 +121,13 @@ public class CalendarView extends ViewGroup {
             @Override
             public void onClick(View v) {
 
-                if (selectPostion != -1) {
-                    getChildAt(selectPostion).setSelected(false);
+                if (tmpPosition != -1) {
+//                    getChildAt(selectPostion).setSelected(false);
+                    getChildAt(tmpPosition).setSelected(false);
                     getChildAt(potsion).setSelected(true);
                 }
-                selectPostion = potsion;
-
+//                selectPostion = potsion;
+                    tmpPosition = potsion;
                 if (onItemClickListener != null) {
                     onItemClickListener.onItemClick(view, potsion, bean);
                 }
