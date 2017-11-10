@@ -124,10 +124,10 @@ public class CalendarView extends ViewGroup {
                 if (tmpPosition != -1) {
 //                    getChildAt(selectPostion).setSelected(false);
                     getChildAt(tmpPosition).setSelected(false);
-                    getChildAt(potsion).setSelected(true);
                 }
+                getChildAt(potsion).setSelected(true);
 //                selectPostion = potsion;
-                    tmpPosition = potsion;
+                tmpPosition = potsion;
                 if (onItemClickListener != null) {
                     onItemClickListener.onItemClick(view, potsion, bean);
                 }
