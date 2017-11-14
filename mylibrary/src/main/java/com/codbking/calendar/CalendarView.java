@@ -138,7 +138,11 @@ public class CalendarView extends ViewGroup {
     public int[] getSelectPostion() {
         Rect rect = new Rect();
         try {
-            getChildAt(selectPostion).getHitRect(rect);
+            if (tmpPosition != -1) {
+                getChildAt(tmpPosition).getHitRect(rect);
+            } else {
+                getChildAt(selectPostion).getHitRect(rect);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

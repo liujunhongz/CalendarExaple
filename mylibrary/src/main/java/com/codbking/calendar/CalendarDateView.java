@@ -137,10 +137,12 @@ public class CalendarDateView extends ViewPager implements CalendarTopView {
                     CalendarView view = views.get(position - 1);
                     if (view != null && view.tmpPosition != -1) {
                         view.getChildAt(view.tmpPosition).setSelected(false);
+                        view.tmpPosition = -1;
                     }
                     view = views.get(position + 1);
                     if (view != null && view.tmpPosition != -1) {
                         view.getChildAt(view.tmpPosition).setSelected(false);
+                        view.tmpPosition = -1;
                     }
                 }
                 if (onItemClickListener != null) {
