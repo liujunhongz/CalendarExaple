@@ -101,7 +101,7 @@ public class CalendarView extends ViewGroup {
                     chidView.setSelected(selectPostion == i);
                 }
             } else {
-                if (selectPostion == -1 && bean.day == date[2]) {
+                if (selectPostion == -1 && bean.day == 1) {
                     selectPostion = i;
                 }
             }
